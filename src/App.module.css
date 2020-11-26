@@ -1,0 +1,12 @@
+.LeafletContainer{
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.MapContainer {
+  height: 800px;
+  width: 1000px;
+  margin: 0 auto;
+  border: 1px solid black;
+}
