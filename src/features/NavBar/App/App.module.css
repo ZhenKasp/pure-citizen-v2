@@ -1,0 +1,14 @@
+.Dropdown > a {
+  padding-left: 0;
+}
+
+.Dropdown > div {
+  max-width: 160px;
+}
+
+@media (min-width: 576px) {
+  .Dropdown > div {
+    right: 0;
+    left: auto;
+  }
+}
