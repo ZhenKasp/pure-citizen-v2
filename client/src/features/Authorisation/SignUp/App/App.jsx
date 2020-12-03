@@ -3,6 +3,7 @@ import classes from './App.module.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.css';
+import signup from '../../../../utilities/signup';
 
 const App = (props) => {
 
@@ -10,9 +11,10 @@ const App = (props) => {
     <div className={classes.SignUp}>
       <h1>Please Sign Up</h1>
       <Form
-        onSubmit={
-          (event) => {console.log('signup')}
-        }
+        onSubmit={(event) => signup(
+          event,
+          "authenticate"
+        )}
       >
         <Form.Group>
           <Form.Label>Email address</Form.Label>
@@ -40,7 +42,7 @@ const App = (props) => {
           <Form.Control
             maxLength="255"
             autoFocus
-            name="firstname"
+            name="first_name"
             required
             placeholder="First Name"
           />
@@ -50,7 +52,7 @@ const App = (props) => {
           <Form.Control
             maxLength="255"
             autoFocus
-            name="lastname"
+            name="last_name"
             required
             placeholder="Last Name"
           />
@@ -62,6 +64,16 @@ const App = (props) => {
             type="password"
             required
             name="password"
+            placeholder="Password"
+          />
+        </Form.Group>
+        <Form.Group >
+          <Form.Label>Password Confirmation</Form.Label>
+          <Form.Control
+            maxLength="255"
+            type="password"
+            required
+            name="password_confirmation"
             placeholder="Password"
           />
         </Form.Group>
