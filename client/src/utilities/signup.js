@@ -1,10 +1,7 @@
 import axios from 'axios';
 import getFormData from './getFormData';
 
-const signup = (
-  event,
-  path
-) => {
+const signup = (event, path) => {
   event.preventDefault();
   const object = getFormData(event);
 
