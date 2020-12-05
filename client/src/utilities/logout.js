@@ -1,15 +1,16 @@
 import axios from 'axios';
 
-const logout = (viewHandler, createFlashMessage, deleteUser, token) => {
-  axios.delete(process.env.REACT_APP_PATH_TO_SERVER + "users/logout",
-    { headers:
-      { authorization: token }
-    }, {})
+const logout = (user, createFlashMessage, history) => {
+  axios.delete(process.env.REACT_APP_PATH_TO_SERVER + "authenticate/sign_out",
+    { headers: {
+      "uid": user.uid, "client": user.client, "access-token": user.accessToken
+    }}, {})
   .then(res => {
-    viewHandler("/");
-    deleteUser();
-    localStorage.clear();
-    createFlashMessage(res.data.message, res.data.variant);
+    if (res.data.success) {
+      localStorage.clear();
+      createFlashMessage("Log out successfuly", "success");
+      history.push("/");
+    }
   })
   .catch(error => {
     console.log(error)

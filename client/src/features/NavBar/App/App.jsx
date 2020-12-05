@@ -4,6 +4,8 @@ import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import classes from './App.module.css';
 import { useHistory } from "react-router-dom";
+import logout from '../../../utilities/logout';
+import { connect } from 'react-redux';
 
 const App = props => {
   let history = useHistory();
@@ -18,10 +20,16 @@ const App = props => {
         </Nav>
         <Nav>
           <NavDropdown className={classes.Dropdown} title="Dropdown">
-            <NavDropdown.Item onClick={() => history.push("/signin")}>Sign In</NavDropdown.Item>
-            <NavDropdown.Item onClick={() => history.push("/signup")}>Sign Up</NavDropdown.Item>
+            <NavDropdown.Item onClick={() => history.push("/signin")}>
+              Sign In
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={() => history.push("/signup")}>
+              Sign Up
+            </NavDropdown.Item>
             <NavDropdown.Divider />
-            <NavDropdown.Item>Log Out</NavDropdown.Item>
+            <NavDropdown.Item onClick={() => logout(props.user, props.createFlashMessage, history)}>
+              Log Out
+            </NavDropdown.Item>
           </NavDropdown>
         </Nav>
       </Navbar.Collapse>
@@ -29,4 +37,17 @@ const App = props => {
   )
 };
 
-export default App;
+const mapStateToProps = state => ({ user: state.user });
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setUser: value => dispatch({ type: "SET_USER", value }),
+    createFlashMessage: (text, variant) => dispatch({
+      type: "CREATE_FLASH_MESSAGE",
+      text: text,
+      variant: variant
+    })
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -3,23 +3,26 @@ import getFormData from './getFormData';
 
 const signin = (
   event,
-  path,
-  createFlashMessage
+  createFlashMessage,
+  setUser,
+  history
 ) => {
   event.preventDefault();
   const object = getFormData(event);
 
-  axios.post(process.env.REACT_APP_PATH_TO_SERVER + path, object)
+  axios.post(process.env.REACT_APP_PATH_TO_SERVER + "authenticate/sign_in", object)
   .then(res => {
-    console.log(res.data);
-    if (res.data.errors) {
-      console.log(res.data.error);
-    } else {
-      console.log(res);
+    if (res.data.success) {
+      setUser({
+        ...res.data.data,
+        accessToken: res.headers["access-token"],
+        client: res.headers.client
+      });
+      history.push("/");
     }
   })
   .catch((err) => {
-    createFlashMessage(err.message, "danger")
+    createFlashMessage(err.response.data.errors.full_messages[0], "danger")
   });
 }
 

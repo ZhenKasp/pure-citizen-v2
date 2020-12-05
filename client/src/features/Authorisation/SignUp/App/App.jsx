@@ -4,16 +4,22 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.css';
 import signup from '../../../../utilities/signup';
+import { connect } from 'react-redux';
+import { useHistory } from "react-router-dom";
 
 const App = (props) => {
+  let history = useHistory();
 
   return (
     <div className={classes.SignUp}>
       <h1>Please Sign Up</h1>
       <Form
-        onSubmit={(event) => signup(
+        onSubmit={(event) =>
+          signup(
           event,
-          "authenticate"
+          props.createFlashMessage,
+          props.setUser,
+          history
         )}
       >
         <Form.Group>
@@ -85,4 +91,15 @@ const App = (props) => {
   )
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    setUser: value => dispatch({ type: "SET_USER", value }),
+    createFlashMessage: (text, variant) => dispatch({
+      type: "CREATE_FLASH_MESSAGE",
+      text: text,
+      variant: variant
+    })
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App);

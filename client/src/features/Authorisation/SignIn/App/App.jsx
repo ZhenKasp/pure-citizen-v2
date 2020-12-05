@@ -5,8 +5,11 @@ import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.css';
 import signin from '../../../../utilities/signin';
 import { connect } from 'react-redux';
+import { useHistory } from "react-router-dom";
 
 const App = props => {
+  let history = useHistory();
+
   return (
     <div className={classes.SignIn}>
       <h1>Please Sign In</h1>
@@ -14,9 +17,9 @@ const App = props => {
         onSubmit={(event) =>
           signin(
           event,
-          "authenticate/sign_in",
           props.createFlashMessage,
-          props.setUser
+          props.setUser,
+          history
         )}
       >
         <Form.Group>
@@ -31,7 +34,7 @@ const App = props => {
           />
         </Form.Group>
         <Form.Group controlId="formBasicPassword">
-          <Form.Label>"Password"</Form.Label>
+          <Form.Label>Password</Form.Label>
           <Form.Control
             maxLength="255"
             type="password"

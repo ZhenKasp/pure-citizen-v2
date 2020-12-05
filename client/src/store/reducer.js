@@ -8,14 +8,15 @@ const actions = {
 const initialState = {
   user: {
     id: 0,
-    token: "",
-    username: ""
+    username: "",
+    client: "",
+    accessToken: "",
+    uid: ""
   },
   flashMessage: {
     text: "",
     variant: "danger"
-  },
-  theme: "light"
+  }
 };
 
 const reducer = (state = initialState, action) => {
