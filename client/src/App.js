@@ -5,8 +5,8 @@ import {
   Route
 } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import AllRecords from './features/AllRecords';
-import MyRecords from './features/MyRecords';
+import AllRecords from './features/Records/AllRecords';
+import MyRecords from './features/Records/MyRecords';
 import FlashMessage from './features/FlashMessage';
 import SignIn from './features/Authorisation/SignIn';
 import SignUp from './features/Authorisation/SignUp';

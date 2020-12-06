@@ -12,7 +12,7 @@ const signin = (
 
   axios.post(process.env.REACT_APP_PATH_TO_SERVER + "authenticate/sign_in", object)
   .then(res => {
-    if (res.data.success) {
+    if (!res.data.errors) {
       setUser({
         ...res.data.data,
         accessToken: res.headers["access-token"],

@@ -11,8 +11,8 @@ const App = props => {
   let history = useHistory();
 
   return (
-    <Navbar bg="light" expand="sm">
-      <Navbar.Brand onClick={() => history.push("/")}>All Records</Navbar.Brand>
+    <Navbar bg="dark" variant="dark" expand="sm">
+      <Navbar.Brand className={classes.Brand} onClick={() => history.push("/")}>All Records</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">

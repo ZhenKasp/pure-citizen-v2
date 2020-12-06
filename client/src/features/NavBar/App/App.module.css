@@ -1,3 +1,8 @@
+.Brand:hover {
+  cursor: pointer;
+  color: #c4c4c4 !important;
+}
+
 .Dropdown > a {
   padding-left: 0;
 }
