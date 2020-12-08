@@ -18,18 +18,18 @@ const NewRecordModal = (props) => {
     event.preventDefault();
 
     const object = new FormData(event.target);
-    object.append('post[image]', image);
+    if (image.length > 0) object.append('post[image]', image);
     object.append('post[user_id]', props.user.id);
     event.persist();
 
-    axios.post(process.env.REACT_APP_PATH_TO_SERVER + 'posts',
+    axios.post(process.env.REACT_APP_PATH_TO_SERVER + "posts",
       object, { headers: { authorization: props.user.token, 'Content-Type': 'multipart/form-data' }}
     ).then(res => {
       if (res.data.error) {
-        props.createFlashMessage(res.data.error, res.data.variant);
+        props.createFlashMessage(res.data.error, "danger");
       } else {
-        props.createFlashMessage(res.data.message, res.data.variant);
-        props.setMyRecords([...props.records, res.data.post]);
+        props.createFlashMessage(res.data.message, "success");
+        props.setMyRecords([...props.myRecords, res.data.post]);
         props.modalIsShownCancelHandler();
         event.target.reset();
         setImage("");
@@ -82,7 +82,7 @@ const NewRecordModal = (props) => {
                     src={URL.createObjectURL(image)}
                     alt={image.path}
                     className={classes.Image}
-                  />
+                  />``
                   <span
                     className={classes.Close}
                     onClick={(e) => {e.stopPropagation(); setImage("")}}

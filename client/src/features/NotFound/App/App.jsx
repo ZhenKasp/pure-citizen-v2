@@ -1,8 +1,16 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
+import { useHistory } from 'react-router-dom';
+import classes from './App.module.css';
 
 const App = props => {
+  let history = useHistory();
   return (
-    <p>Not Found</p>
+    <div className={classes.NotFound}>
+      <h1>Hmmm...</h1>
+      <h4>We can't seem to find the page you're looking for.</h4>
+      <Button onClick={() => history.replace('/')}>Go to homepage</Button>
+    </div>
   )
 };
 

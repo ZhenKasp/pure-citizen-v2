@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AllRecords from './features/Records/AllRecords';
+import CurrentRecord from './features/Records/CurrentRecord';
 import MyRecords from './features/Records/MyRecords';
 import FlashMessage from './features/FlashMessage';
 import SignIn from './features/Authorisation/SignIn';
@@ -16,30 +17,31 @@ import { connect } from 'react-redux';
 
 const App = props => (
   <Router>
-    <div>
-      <NavBar />
-      <FlashMessage />
-      <Switch>
-        <Route path="/" exact>
-          <AllRecords />
-        </Route>
-        <Route path="/myrecords">
-          <MyRecords />
-        </Route>
-        <Route path="/signin">
-          <SignIn />
-        </Route>
-        <Route path="/signup">
-          <SignUp />
-        </Route>
-        <Route path="/signup">
-          <SignUp />
-        </Route>
-        <Route path="*">
-          <NotFound />
-        </Route>
-      </Switch>
-    </div>
+    <NavBar />
+    <FlashMessage />
+    <Switch>
+      <Route path="/" exact>
+        <AllRecords />
+      </Route>
+      <Route path="/myrecords">
+        <MyRecords />
+      </Route>
+      <Route path="/currentRecord" exact>
+        <CurrentRecord />
+      </Route>
+      <Route path="/signin">
+        <SignIn />
+      </Route>
+      <Route path="/signup">
+        <SignUp />
+      </Route>
+      <Route path="/signup">
+        <SignUp />
+      </Route>
+      <Route path="*">
+        <NotFound />
+      </Route>
+    </Switch>
   </Router>
 );
 

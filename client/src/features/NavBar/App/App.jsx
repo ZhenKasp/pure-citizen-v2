@@ -10,37 +10,58 @@ import { connect } from 'react-redux';
 const App = props => {
   let history = useHistory();
 
-  return (
-    <Navbar bg="dark" variant="dark" expand="sm">
-      <Navbar.Brand className={classes.Brand} onClick={() => history.push("/")}>All Records</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          <Nav.Link onClick={() => history.push("/myrecords")}>My Records</Nav.Link>
-        </Nav>
-        <Nav>
-          <NavDropdown className={classes.Dropdown} title="Dropdown">
-            <NavDropdown.Item onClick={() => history.push("/signin")}>
-              Sign In
-            </NavDropdown.Item>
-            <NavDropdown.Item onClick={() => history.push("/signup")}>
-              Sign Up
-            </NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item onClick={() => logout(props.user, props.createFlashMessage, history)}>
-              Log Out
-            </NavDropdown.Item>
-          </NavDropdown>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
-  )
+  if (props.user.id !== 0) {
+    return (
+      <Navbar bg="dark" variant="dark" expand="sm">
+        <Navbar.Brand className={classes.Brand} onClick={() => history.push("/")}>All Records</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link onClick={() => history.push("/myrecords")}>My Records</Nav.Link>
+          </Nav>
+          <Nav>
+            <NavDropdown className={classes.Dropdown} title="Dropdown">
+              <NavDropdown.Item onClick={() => history.push("/signup")}>
+                Profile
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item
+                onClick={() => logout(props.user, props.deleteUser, props.createFlashMessage, history)}>
+                Log Out
+              </NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+    )
+  } else {
+    return (
+      <Navbar bg="dark" variant="dark" expand="sm">
+        <Navbar.Brand className={classes.Brand} onClick={() => history.push("/")}>All Records</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto" />
+          <Nav>
+            <NavDropdown className={classes.Dropdown} title="Dropdown">
+              <NavDropdown.Item onClick={() => history.push("/signin")}>
+                Sign In
+              </NavDropdown.Item>
+              <NavDropdown.Item onClick={() => history.push("/signup")}>
+                Sign Up
+              </NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+    )
+  }
 };
 
 const mapStateToProps = state => ({ user: state.user });
 
 const mapDispatchToProps = dispatch => {
   return {
+    deleteUser: () => dispatch({ type: "DELETE_USER"}),
     setUser: value => dispatch({ type: "SET_USER", value }),
     createFlashMessage: (text, variant) => dispatch({
       type: "CREATE_FLASH_MESSAGE",

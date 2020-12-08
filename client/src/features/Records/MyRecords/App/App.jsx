@@ -14,7 +14,7 @@ const App = (props) => {
       axios.get(process.env.REACT_APP_PATH_TO_SERVER + "posts")
       .then(res => {
         if (res.data.error) {
-          props.createFlashMessage(res.data.error, res.data.variant);
+          props.createFlashMessage(res.data.error, "danger");
         } else {
           setMyRecords(res.data.posts);
         }
@@ -35,7 +35,12 @@ const App = (props) => {
             <p>{record.body}</p>
             <p>Longitude:</p>
             <p>Latitude:</p>
-            <img className={classes.Image} src={record.url} alt={record.title} />
+            {record.url.length > 0 ?
+              <img
+                className={classes.Image}
+                src={record.url}
+                alt={record.title}
+              /> : null}
           </div>
         )) : <p>No records yet</p>
       }

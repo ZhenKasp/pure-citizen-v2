@@ -8,7 +8,7 @@ const App = props => {
       <Alert
         onClose={props.destroyFlashMessage}
         dismissible
-        variant={props.flashMessage.variant || "danger"}
+        variant={props.flashMessage.variant || "warning"}
       >
         {props.flashMessage.text}
       </Alert>

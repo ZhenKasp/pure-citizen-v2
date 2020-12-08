@@ -15,7 +15,7 @@ class Api::V1::PostsController < ApplicationController
   def update
     post = Post.find(params[:id])
     if post.update(post_params)
-      render json: { success: true, post: post }
+      render json: { success: true, post: post, message: "Record successfuly updated" }
     else
       render json: { success: false, errors: post.errors.full_messages }
     end
@@ -24,7 +24,7 @@ class Api::V1::PostsController < ApplicationController
   def create
     post = Post.new(post_params)
     if post.save
-      render json: { success: true, post: post }
+      render json: { success: true, post: post, message: "Record successfuly created" }
     else
       render json: { success: false, errors: post.errors.full_messages }
     end
@@ -33,7 +33,7 @@ class Api::V1::PostsController < ApplicationController
   def destroy
     post = Post.find(params[:id])
     if post.destroy
-      render json: { success: true }
+      render json: { success: true, message: "Record successfuly deleted" }
     else
       render json: { success: false, errors: post.errors.full_messages }
     end

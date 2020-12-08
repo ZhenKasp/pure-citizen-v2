@@ -4,12 +4,13 @@ class Post < ActiveRecord::Base
 
   def as_json(_)
     {
+      id: id,
       title: title,
       body: body,
       latitude: latitude,
       longitude: longitude,
       author: user.first_name + " " + user.last_name,
-      url: image.service_url
+      url: image.attached? ? image.service_url : ""
     }
   end
 end
