@@ -18,6 +18,9 @@ const signup = (
         accessToken: res.headers["access-token"],
         client: res.headers.client
       });
+      axios.defaults.headers.common["uid"] = res.data.data.uid;
+      axios.defaults.headers.common["client"] = res.headers.client;
+      axios.defaults.headers.common["access-token"] = res.headers["access-token"];
       history.push("/");
     }
   })

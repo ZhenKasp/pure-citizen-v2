@@ -1,15 +1,15 @@
 class Api::V1::PostsController < ApplicationController
+  before_action :authenticate_user!, only: [:update, :create, :destroy]
+
   def index
     render json: { posts: Post.all }
   end
 
   def show
     post = Post.find(params[:id])
-    if post
-      render json: { success: true, post: post }
-    else
-      render json: { success: false, errors: post.errors.full_messages }
-    end
+    render json: { success: true, post: post }
+  rescue ActiveRecord::RecordNotFound
+    render json: { success: false, errors: "Not found" }
   end
 
   def update
@@ -19,6 +19,8 @@ class Api::V1::PostsController < ApplicationController
     else
       render json: { success: false, errors: post.errors.full_messages }
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: { success: false, errors: "Not found" }
   end
 
   def create
@@ -37,6 +39,8 @@ class Api::V1::PostsController < ApplicationController
     else
       render json: { success: false, errors: post.errors.full_messages }
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: { success: false, errors: "Not found" }
   end
 
   private

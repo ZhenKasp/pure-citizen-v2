@@ -20,7 +20,7 @@ const App = props => {
             <Nav.Link onClick={() => history.push("/myrecords")}>My Records</Nav.Link>
           </Nav>
           <Nav>
-            <NavDropdown className={classes.Dropdown} title="Dropdown">
+            <NavDropdown className={classes.Dropdown} title={props.user.username}>
               <NavDropdown.Item onClick={() => history.push("/signup")}>
                 Profile
               </NavDropdown.Item>
@@ -42,7 +42,7 @@ const App = props => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto" />
           <Nav>
-            <NavDropdown className={classes.Dropdown} title="Dropdown">
+            <NavDropdown className={classes.Dropdown} title="Guest">
               <NavDropdown.Item onClick={() => history.push("/signin")}>
                 Sign In
               </NavDropdown.Item>

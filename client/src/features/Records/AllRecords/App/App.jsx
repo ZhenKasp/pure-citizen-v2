@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import classes from "./App.module.css";
+import { useHistory } from 'react-router-dom';
 
 const App = (props) => {
+  let history = useHistory();
   const [allRecords, setAllRecords] = useState([]);
 
   useEffect(() => {
@@ -26,11 +28,13 @@ const App = (props) => {
       <h2>Records</h2>
       {allRecords.length > 0 ?
         allRecords.map(record => (
-          <div className={classes.Record} key={record.id}>
+          <div
+            className={classes.Record}
+            key={record.id}
+            onClick={() => history.push("record/" + record.id)}
+          >
             <h4>{record.title}</h4>
-            <p>{record.body}</p>
-            <p>Longitude:</p>
-            <p>Latitude:</p>
+            <p>Author: {record.author}</p>
             {record.url.length > 0 ?
               <img
                 className={classes.Image}

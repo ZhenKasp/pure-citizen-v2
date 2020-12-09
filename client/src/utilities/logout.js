@@ -9,6 +9,9 @@ const logout = (user, deleteUser, createFlashMessage, history) => {
     if (res.data.success) {
       deleteUser();
       createFlashMessage("Log out successfuly", "success");
+      axios.defaults.headers.common["uid"] = '';
+      axios.defaults.headers.common["client"] = '';
+      axios.defaults.headers.common["access-token"] = '';
       history.push("/");
     }
   })

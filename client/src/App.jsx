@@ -20,13 +20,13 @@ const App = props => (
     <NavBar />
     <FlashMessage />
     <Switch>
-      <Route path="/" exact>
+      <Route exact path="/" >
         <AllRecords />
       </Route>
       <Route path="/myrecords">
         <MyRecords />
       </Route>
-      <Route path="/currentRecord" exact>
+      <Route exact path="/record/:id" >
         <CurrentRecord />
       </Route>
       <Route path="/signin">
@@ -46,7 +46,10 @@ const App = props => (
 );
 
 const mapStateToProps = state => {
-  return { flashMessage: state.flashMessage }
+  return {
+    flashMessage: state.flashMessage,
+    user: state.user
+  }
 }
 
 export default connect(mapStateToProps)(App);
