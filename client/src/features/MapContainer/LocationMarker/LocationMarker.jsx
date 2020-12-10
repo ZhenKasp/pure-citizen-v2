@@ -1,32 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { useMap, useMapEvents, Marker, Popup } from "react-leaflet";
+import React, { useEffect } from 'react';
+import { Marker, Popup, useMap } from "react-leaflet";
+import { connect } from 'react-redux';
 
-const LocationMarker = () => {
-  const [position, setPosition] = useState(null)
-  const map = useMapEvents({
-    click: () => {
-      map.locate()
-    },
-    locationfound(e) {
-      setPosition(e.latlng)
-      console.log(e.latlng);
-      map.flyTo(e.latlng, map.getZoom())
-    },
-  });
+const LocationMarker = props => {
+  const map = useMap();
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log("Latitude is :", position.coords.latitude);
-      console.log("Longitude is :", position.coords.longitude);
-      setPosition({lat: position.coords.latitude, lng: position.coords.longitude})
-    });
-  }, []);
+    map.flyTo(props.position, map.getZoom(15))
+  }, props.position)
 
-  return position === null ? null : (
-    <Marker position={position}>
+  return props.position === null ? null : (
+    <Marker position={props.position}>
       <Popup>You are here</Popup>
     </Marker>
   )
 }
 
-export default LocationMarker;
+const mapStateToProps = state => ({ position: state.position });
+const mapDispatchToProps = dispatch => ({ setPosition: position => dispatch({ type: "SET_POSITION", position }) });
+
+export default connect(mapStateToProps, mapDispatchToProps)(LocationMarker);

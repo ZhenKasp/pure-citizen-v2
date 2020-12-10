@@ -5,8 +5,8 @@
 }
 
 .MapContainer {
-  height: 560px;
-  width: 360px;
+  height: 380px;
+  width: auto;
   margin: 0 auto;
   border: 1px solid black;
 }

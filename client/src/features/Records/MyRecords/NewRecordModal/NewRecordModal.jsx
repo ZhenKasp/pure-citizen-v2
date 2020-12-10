@@ -108,6 +108,7 @@ const mapDispatchToProps = dispatch => {
       text: text,
       variant: variant
     })
+    
   }
 }
 

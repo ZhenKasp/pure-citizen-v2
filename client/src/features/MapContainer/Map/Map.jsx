@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { MapContainer, TileLayer } from "react-leaflet";
 import LocationMarker from '../LocationMarker/LocationMarker';
 import classes from './Map.module.css';
+import { connect } from 'react-redux';
 
 const Map = props => {
-  const [position, setPosition] = useState([51.505, -0.09]);
-      console.log(position);
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log("Latitude is :", position.coords.latitude);
-      console.log("Longitude is :", position.coords.longitude);
-      setPosition([position.coords.latitude, position.coords.longitude])
-    });
-  }, []);
 
+useEffect(() => {
+  navigator.geolocation.getCurrentPosition((position) => {
+    props.setPosition([position.coords.latitude, position.coords.longitude]);
+  });
+}, []);
 
   return (
     <div className={classes.MapContainer}>
-      <MapContainer className={classes.LeafletContainer} center={position} zoom={13} scrollWheelZoom={false}>
+      <MapContainer className={classes.LeafletContainer} center={props.position} zoom={12} scrollWheelZoom={false}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <LocationMarker />
+      <LocationMarker position={props.position} />
       </MapContainer>
     </div>
   )
 };
 
-export default Map;
+const mapStateToProps = state => ({ position: state.position });
+const mapDispatchToProps = dispatch => ({ setPosition: position => dispatch({ type: "SET_POSITION", position }) });
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);

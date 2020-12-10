@@ -4,8 +4,10 @@ import Button from 'react-bootstrap/Button'
 import { connect } from 'react-redux';
 import classes from './App.module.css';
 import NewRecordModal from '../NewRecordModal/NewRecordModal';
+import { useHistory } from 'react-router-dom';
 
 const App = (props) => {
+  let history = useHistory();
   const [myRecords, setMyRecords] = useState([]);
   const [modalIsShown, setModalIsShown] = useState(false);
 
@@ -30,11 +32,17 @@ const App = (props) => {
       <Button  onClick={() => setModalIsShown(true)}>Create new record</Button>
       {myRecords.length > 0 ?
         myRecords.map(record => (
-          <div className={classes.Record} key={record.id}>
+          <div
+            className={classes.Record}
+            key={record.id}
+            onClick={() => history.push("record/" + record.id)}
+          >
             <h4>{record.title}</h4>
             <p>{record.body}</p>
-            <p>Longitude:</p>
-            <p>Latitude:</p>
+            <p>
+              Latitude: {record.latitude}
+              Longitude: {record.longitude}
+            </p>
             {record.url.length > 0 ?
               <img
                 className={classes.Image}
@@ -55,6 +63,8 @@ const App = (props) => {
   )
 }
 
+const mapStateToProps = state => ({ position: state.position });
+
 const mapDispatchToProps = dispatch => {
   return {
     createFlashMessage: (text, variant) => dispatch({
@@ -63,6 +73,6 @@ const mapDispatchToProps = dispatch => {
       variant: variant
     })
   }
-}
+};
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

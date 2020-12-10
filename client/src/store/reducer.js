@@ -2,7 +2,8 @@ const actions = {
   SET_USER: "SET_USER",
   DELETE_USER: "DELETE_USER",
   CREATE_FLASH_MESSAGE: "CREATE_FLASH_MESSAGE",
-  DESTROY_FLASH_MESSAGE: "DESTROY_FLASH_MESSAGE"
+  DESTROY_FLASH_MESSAGE: "DESTROY_FLASH_MESSAGE",
+  SET_POSITION: "SET_POSITION"
 }
 
 const initialState = {
@@ -16,7 +17,8 @@ const initialState = {
   flashMessage: {
     text: "",
     variant: "danger"
-  }
+  },
+  position: [53.9, 27.5667]
 };
 
 const reducer = (state = initialState, action) => {
@@ -41,6 +43,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         flashMessage: { text: "", variant: "" }
+      };
+    case actions.SET_POSITION:
+      return {
+        ...state,
+        position: action.position
       };
     default:
       return state;

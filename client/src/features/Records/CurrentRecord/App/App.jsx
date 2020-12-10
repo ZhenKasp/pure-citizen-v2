@@ -3,6 +3,7 @@ import axios from 'axios';
 import classes from "./App.module.css";
 import { useParams, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
+import MapContainer from '../../../MapContainer';
 
 const App = props => {
   let history = useHistory();
@@ -29,8 +30,11 @@ const App = props => {
     <div className={classes.Wrapper}>
       <h2>{record.title}</h2>
       <p>{record.body}</p>
-      <p>latitude: {record.latitude}</p>
-      <p>longitude: {record.longitude}</p>
+      <p>
+        Latitude: {record.latitude}
+        Longitude: {record.longitude}
+      </p>
+      <MapContainer />
       <p>Author: {record.author}</p>
         {record.url?.length > 0 ?
           <img
@@ -42,7 +46,10 @@ const App = props => {
   )
 }
 
-const mapStateToProps = state => ({ user: state.user });
+const mapStateToProps = state => ({
+  user: state.user,
+  position: state.position
+});
 
 const mapDispatchToProps = dispatch => {
   return {
