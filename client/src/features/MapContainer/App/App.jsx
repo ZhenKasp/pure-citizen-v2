@@ -3,7 +3,7 @@ import Map from '../Map/Map';
 
 const App = props => {
   return (
-    <Map />
+    <Map havePosition={props.havePosition}/>
   )
 };
 

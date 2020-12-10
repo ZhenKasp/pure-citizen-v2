@@ -6,6 +6,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import classes from './NewRecordModal.module.css';
+import MapContainer from '../../../MapContainer';
 
 const NewRecordModal = (props) => {
   const [image, setImage] = useState("");
@@ -18,15 +19,16 @@ const NewRecordModal = (props) => {
     event.preventDefault();
 
     const object = new FormData(event.target);
+    object.append('post[latitude]', props.position[0]);
+    object.append('post[longitude]', props.position[1]);
     if (image.length > 0) object.append('post[image]', image);
     object.append('post[user_id]', props.user.id);
     event.persist();
-
     axios.post(process.env.REACT_APP_PATH_TO_SERVER + "posts",
       object, { headers: { authorization: props.user.token, 'Content-Type': 'multipart/form-data' }}
     ).then(res => {
       if (res.data.error) {
-        props.createFlashMessage(res.data.error, "danger");
+        props.createFlashMessage(res.data.errors, "danger");
       } else {
         props.createFlashMessage(res.data.message, "success");
         props.setMyRecords([...props.myRecords, res.data.post]);
@@ -68,6 +70,10 @@ const NewRecordModal = (props) => {
             />
           </Form.Group>
           <Form.Group>
+            <Form.Label>Сoordinates</Form.Label>
+            <MapContainer havePosition/>
+          </Form.Group>
+          <Form.Group>
             <label>Image</label>
             <div {...getRootProps()} className={classes.Dropzone}>
               <input {...getInputProps()} />
@@ -99,7 +105,10 @@ const NewRecordModal = (props) => {
   )
 }
 
-const mapStateToProps = state => ({ user: state.user });
+const mapStateToProps = state => ({
+  user: state.user,
+  position: state.position
+});
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -107,8 +116,7 @@ const mapDispatchToProps = dispatch => {
       type: "CREATE_FLASH_MESSAGE",
       text: text,
       variant: variant
-    })
-    
+    }),
   }
 }
 

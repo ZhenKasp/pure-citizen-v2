@@ -16,6 +16,7 @@ const App = props => {
     ).then(res => {
       if (!res.data.errors) {
         setRecord(res.data.post);
+        props.setPosition([res.data.post.latitude, res.data.post.longitude]);
       } else {
         history.replace('/notFound');
       }
@@ -34,7 +35,7 @@ const App = props => {
         Latitude: {record.latitude}
         Longitude: {record.longitude}
       </p>
-      <MapContainer />
+      <MapContainer havePosition/>
       <p>Author: {record.author}</p>
         {record.url?.length > 0 ?
           <img
@@ -57,7 +58,8 @@ const mapDispatchToProps = dispatch => {
       type: "CREATE_FLASH_MESSAGE",
       text: text,
       variant: variant
-    })
+    }),
+    setPosition: position => dispatch({ type: "SET_POSITION", position })
   }
 }
 

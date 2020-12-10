@@ -1,16 +1,33 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { Marker, Popup, useMap } from "react-leaflet";
 import { connect } from 'react-redux';
 
 const LocationMarker = props => {
   const map = useMap();
+  const markerRef = useRef(null);
+  const eventHandlers = useMemo(
+    () => ({
+      dragend() {
+        const marker = markerRef.current
+        if (marker != null) {
+          props.setPosition([marker.getLatLng().lat, marker.getLatLng().lng])
+        }
+      },
+    }),
+    [],
+  );
 
   useEffect(() => {
     map.flyTo(props.position, map.getZoom(15))
   }, props.position)
 
   return props.position === null ? null : (
-    <Marker position={props.position}>
+    <Marker
+      position={props.position}
+      draggable
+      eventHandlers={eventHandlers}
+      ref={markerRef}>
+    >
       <Popup>You are here</Popup>
     </Marker>
   )

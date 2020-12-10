@@ -16,11 +16,13 @@ const signup = (
       setUser({
         ...res.data.data,
         accessToken: res.headers["access-token"],
-        client: res.headers.client
+        client: res.headers.client,
+        expiry: res.headers.expiry
       });
       axios.defaults.headers.common["uid"] = res.data.data.uid;
       axios.defaults.headers.common["client"] = res.headers.client;
       axios.defaults.headers.common["access-token"] = res.headers["access-token"];
+      axios.defaults.headers.common["expiry"] = res.headers.expiry;
       history.push("/");
     }
   })

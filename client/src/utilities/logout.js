@@ -12,6 +12,7 @@ const logout = (user, deleteUser, createFlashMessage, history) => {
       axios.defaults.headers.common["uid"] = '';
       axios.defaults.headers.common["client"] = '';
       axios.defaults.headers.common["access-token"] = '';
+      axios.defaults.headers.common["expiry"] = '';
       history.push("/");
     }
   })

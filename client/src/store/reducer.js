@@ -12,7 +12,8 @@ const initialState = {
     username: "",
     client: "",
     accessToken: "",
-    uid: ""
+    uid: "",
+    expiry: ""
   },
   flashMessage: {
     text: "",

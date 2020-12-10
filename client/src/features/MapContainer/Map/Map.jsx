@@ -5,16 +5,17 @@ import classes from './Map.module.css';
 import { connect } from 'react-redux';
 
 const Map = props => {
-
-useEffect(() => {
-  navigator.geolocation.getCurrentPosition((position) => {
-    props.setPosition([position.coords.latitude, position.coords.longitude]);
-  });
-}, []);
+  useEffect(() => {
+    if (!props.havePosition) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        props.setPosition([position.coords.latitude, position.coords.longitude]);
+      });
+    }
+  }, []);
 
   return (
     <div className={classes.MapContainer}>
-      <MapContainer className={classes.LeafletContainer} center={props.position} zoom={12} scrollWheelZoom={false}>
+      <MapContainer className={classes.LeafletContainer} center={props.position} zoom={16} scrollWheelZoom={false}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

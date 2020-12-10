@@ -14,36 +14,45 @@ import SignUp from './features/Authorisation/SignUp';
 import NavBar from './features/NavBar';
 import NotFound from './features/NotFound';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
-const App = props => (
-  <Router>
-    <NavBar />
-    <FlashMessage />
-    <Switch>
-      <Route exact path="/" >
-        <AllRecords />
-      </Route>
-      <Route path="/myrecords">
-        <MyRecords />
-      </Route>
-      <Route exact path="/record/:id" >
-        <CurrentRecord />
-      </Route>
-      <Route path="/signin">
-        <SignIn />
-      </Route>
-      <Route path="/signup">
-        <SignUp />
-      </Route>
-      <Route path="/signup">
-        <SignUp />
-      </Route>
-      <Route path="*">
-        <NotFound />
-      </Route>
-    </Switch>
-  </Router>
-);
+const App = props => {
+  axios.defaults.headers.common["uid"] = props.user.uid;
+  axios.defaults.headers.common["client"] = props.user.client;
+  axios.defaults.headers.common["token-type"] = "Bearer";
+  axios.defaults.headers.common["expiry"] = props.user.expiry;
+  axios.defaults.headers.common["access-token"] = props.user.accessToken;
+
+  return (
+    <Router>
+      <NavBar />
+      <FlashMessage />
+      <Switch>
+        <Route exact path="/" >
+          <AllRecords />
+        </Route>
+        <Route path="/myrecords">
+          <MyRecords />
+        </Route>
+        <Route exact path="/record/:id" >
+          <CurrentRecord />
+        </Route>
+        <Route path="/signin">
+          <SignIn />
+        </Route>
+        <Route path="/signup">
+          <SignUp />
+        </Route>
+        <Route path="/signup">
+          <SignUp />
+        </Route>
+        <Route path="*">
+          <NotFound />
+        </Route>
+      </Switch>
+    </Router>
+  );
+}
 
 const mapStateToProps = state => {
   return {

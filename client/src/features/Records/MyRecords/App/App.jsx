@@ -29,7 +29,7 @@ const App = (props) => {
   return (
     <div className={classes.Wrapper}>
       <h2>My Records</h2>
-      <Button  onClick={() => setModalIsShown(true)}>Create new record</Button>
+      <Button onClick={() => setModalIsShown(true)}>Create new record</Button>
       {myRecords.length > 0 ?
         myRecords.map(record => (
           <div
@@ -38,7 +38,6 @@ const App = (props) => {
             onClick={() => history.push("record/" + record.id)}
           >
             <h4>{record.title}</h4>
-            <p>{record.body}</p>
             <p>
               Latitude: {record.latitude}
               Longitude: {record.longitude}
