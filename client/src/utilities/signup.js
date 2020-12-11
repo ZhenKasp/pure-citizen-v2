@@ -12,7 +12,7 @@ const signup = (
 
   axios.post(process.env.REACT_APP_PATH_TO_SERVER + "authenticate", object)
   .then(res => {
-    if (res.data.success) {
+    if (res.data.status === "success") {
       setUser({
         ...res.data.data,
         accessToken: res.headers["access-token"],

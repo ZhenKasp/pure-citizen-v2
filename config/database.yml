@@ -1,6 +1,6 @@
 default: &default
   adapter: mysql2
-  database: purecitizen
+  database: <%= ENV.fetch("DATABASE") %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
   username: <%= ENV.fetch("LOGIN") %>

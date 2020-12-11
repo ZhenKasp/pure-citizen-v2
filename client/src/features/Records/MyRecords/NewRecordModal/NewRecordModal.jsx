@@ -71,7 +71,7 @@ const NewRecordModal = (props) => {
           </Form.Group>
           <Form.Group>
             <Form.Label>Сoordinates</Form.Label>
-            <MapContainer havePosition/>
+            <MapContainer havePosition={false} />
           </Form.Group>
           <Form.Group>
             <label>Image</label>
