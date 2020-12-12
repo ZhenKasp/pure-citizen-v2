@@ -21,7 +21,7 @@ const NewRecordModal = (props) => {
     const object = new FormData(event.target);
     object.append('post[latitude]', props.position[0]);
     object.append('post[longitude]', props.position[1]);
-    if (image.length > 0) object.append('post[image]', image);
+    if (image?.name) object.append('post[image]', image, image.name);
     object.append('post[user_id]', props.user.id);
     event.persist();
     axios.post(process.env.REACT_APP_PATH_TO_SERVER + "posts",

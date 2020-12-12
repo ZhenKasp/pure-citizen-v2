@@ -7,9 +7,20 @@ import { connect } from 'react-redux';
 const Map = props => {
   useEffect(() => {
     if (!props.havePosition) {
-      navigator.geolocation.getCurrentPosition((position) => {
+      const success = position => {
         props.setPosition([position.coords.latitude, position.coords.longitude]);
-      });
+      };
+      const error = (err) => {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+      };
+
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 10000
+      };
+
+      navigator.geolocation.getCurrentPosition(success, error, options);
     }
   }, []);
 
@@ -20,7 +31,7 @@ const Map = props => {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-      <LocationMarker position={props.position} />
+        <LocationMarker position={props.position} havePosition={props.havePosition}/>
       </MapContainer>
     </div>
   )

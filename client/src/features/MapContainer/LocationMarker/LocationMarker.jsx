@@ -24,9 +24,9 @@ const LocationMarker = props => {
   return props.position === null ? null : (
     <Marker
       position={props.position}
-      draggable
       eventHandlers={eventHandlers}
-      ref={markerRef}>
+      ref={markerRef}
+      draggable={!props.havePosition}
     >
       <Popup>You are here</Popup>
     </Marker>

@@ -32,7 +32,7 @@ const App = props => {
       <h2>{record.title}</h2>
       <p>{record.body}</p>
       <p>
-        Latitude: {record.latitude}
+        Latitude: {record.latitude + " "}
         Longitude: {record.longitude}
       </p>
       <MapContainer havePosition/>
