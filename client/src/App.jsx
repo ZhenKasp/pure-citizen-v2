@@ -13,6 +13,8 @@ import SignIn from './features/Authorisation/SignIn';
 import SignUp from './features/Authorisation/SignUp';
 import NavBar from './features/NavBar';
 import NotFound from './features/NotFound';
+import About from './features/About';
+import Profile from './features/Profile';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -37,11 +39,14 @@ const App = props => {
         <Route exact path="/record/:id" >
           <CurrentRecord />
         </Route>
+        <Route path="/about">
+          <About />
+        </Route>
+        <Route path="/profile">
+          <Profile />
+        </Route>
         <Route path="/signin">
           <SignIn />
-        </Route>
-        <Route path="/signup">
-          <SignUp />
         </Route>
         <Route path="/signup">
           <SignUp />

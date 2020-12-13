@@ -23,6 +23,7 @@ const signup = (
       axios.defaults.headers.common["client"] = res.headers.client;
       axios.defaults.headers.common["access-token"] = res.headers["access-token"];
       axios.defaults.headers.common["expiry"] = res.headers.expiry;
+      createFlashMessage("Sign Up sucessful", "success");
       history.push("/");
     }
   })

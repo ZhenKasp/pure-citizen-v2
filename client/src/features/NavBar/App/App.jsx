@@ -13,16 +13,20 @@ const App = props => {
   if (props.user.id !== 0) {
     return (
       <Navbar bg="dark" variant="dark" expand="sm">
-        <Navbar.Brand className={classes.Brand} onClick={() => history.push("/")}>All Records</Navbar.Brand>
+        <Navbar.Brand className={classes.Brand} onClick={() => history.push("/")}>PURE CITIZEN</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
+            <Nav.Link onClick={() => history.push("/")}>All Records</Nav.Link>
             <Nav.Link onClick={() => history.push("/myrecords")}>My Records</Nav.Link>
           </Nav>
           <Nav>
             <NavDropdown className={classes.Dropdown} title={props.user.username}>
-              <NavDropdown.Item onClick={() => history.push("/signup")}>
+              <NavDropdown.Item onClick={() => history.push("/profile")}>
                 Profile
+              </NavDropdown.Item>
+              <NavDropdown.Item onClick={() => history.push("/about")}>
+                About
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item
@@ -37,12 +41,18 @@ const App = props => {
   } else {
     return (
       <Navbar bg="dark" variant="dark" expand="sm">
-        <Navbar.Brand className={classes.Brand} onClick={() => history.push("/")}>All Records</Navbar.Brand>
+        <Navbar.Brand className={classes.Brand} onClick={() => history.push("/")}>PURE CITIZEN</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto" />
+          <Nav className="mr-auto">
+            <Nav.Link onClick={() => history.push("/")}>All Records</Nav.Link>
+          </Nav>
           <Nav>
             <NavDropdown className={classes.Dropdown} title="Guest">
+              <NavDropdown.Item onClick={() => history.push("/about")}>
+                About
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
               <NavDropdown.Item onClick={() => history.push("/signin")}>
                 Sign In
               </NavDropdown.Item>

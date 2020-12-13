@@ -1,18 +1,19 @@
 import axios from 'axios';
 import getFormData from './getFormData';
 
-const signin = (
+const changeProfile = (
   event,
   createFlashMessage,
   setUser,
-  history
-) => {
+  setIsChanging
+)  => {
   event.preventDefault();
   const object = getFormData(event);
+  console.log(object);
 
-  axios.post(process.env.REACT_APP_PATH_TO_SERVER + "authenticate/sign_in", object)
+  axios.put(process.env.REACT_APP_PATH_TO_SERVER + "authenticate", object)
   .then(res => {
-    if (!res.data.errors) {
+    if (res.data.status === "success") {
       setUser({
         ...res.data.data,
         accessToken: res.headers["access-token"],
@@ -23,8 +24,8 @@ const signin = (
       axios.defaults.headers.common["client"] = res.headers.client;
       axios.defaults.headers.common["access-token"] = res.headers["access-token"];
       axios.defaults.headers.common["expiry"] = res.headers.expiry;
-      createFlashMessage("Sign In sucessful", "success");
-      history.push("/");
+      setIsChanging(false);
+      createFlashMessage("Change profile successful", "success");
     }
   })
   .catch((err) => {
@@ -32,4 +33,4 @@ const signin = (
   });
 }
 
-export default signin;
+export default changeProfile;
