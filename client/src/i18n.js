@@ -11,8 +11,8 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 // the translations
 const resources = {
-  en: { translation: translationEN },
-  ru: { translation: translationRU }
+  ru: { translation: translationRU },
+  en: { translation: translationEN }
 };
 
 i18n
@@ -27,6 +27,7 @@ i18n
     resources,
     fallbackLng: 'en',
     debug: true,
+    lng: "ru",
     react: {
       useSuspense: false
     },
