@@ -6,44 +6,47 @@ import 'bootstrap/dist/css/bootstrap.css';
 import signin from '../../../../utilities/signin';
 import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const App = props => {
   let history = useHistory();
+  const { t } = useTranslation();
 
   return (
     <div className={classes.SignIn}>
-      <h1>Please Sign In</h1>
+      <h1>{t("Please Sign In")}</h1>
       <Form
         onSubmit={(event) =>
           signin(
           event,
           props.createFlashMessage,
           props.setUser,
-          history
+          history,
+          t
         )}
       >
         <Form.Group>
-          <Form.Label>Email address</Form.Label>
+          <Form.Label>{t("Email address")}</Form.Label>
           <Form.Control
             maxLength="255"
             autoFocus
             type="email"
             required
             name="email"
-            placeholder="Enter email"
+            placeholder={t("Email address")}
           />
         </Form.Group>
         <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>{t("Password")}</Form.Label>
           <Form.Control
             maxLength="255"
             type="password"
             required name="password"
-            placeholder="Password"
+            placeholder={t("Password")}
           />
         </Form.Group>
         <Button variant="primary" type="submit">
-          Sign In
+          {t("Sign In")}
         </Button>
       </Form>
     </div>

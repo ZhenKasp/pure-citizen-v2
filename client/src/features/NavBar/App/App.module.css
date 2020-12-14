@@ -4,16 +4,16 @@
 }
 
 .Dropdown > a {
-  padding-left: 0;
+  padding-left: 0 !important;
 }
 
 .Dropdown > div {
-  max-width: 160px;
+  max-width: 160px !important;
 }
 
 @media (min-width: 576px) {
   .Dropdown > div {
-    right: 0;
-    left: auto;
+    right: 0 !important;
+    left: auto !important;
   }
 }

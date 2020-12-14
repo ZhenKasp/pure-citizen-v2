@@ -3,9 +3,11 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import classes from "./App.module.css";
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const App = (props) => {
   let history = useHistory();
+  const { t } = useTranslation();
   const [allRecords, setAllRecords] = useState([]);
 
   useEffect(() => {
@@ -25,7 +27,7 @@ const App = (props) => {
 
   return (
     <div className={classes.Wrapper}>
-      <h2>Records</h2>
+      <h2>{t("Records")}</h2>
       {allRecords.length > 0 ?
         allRecords.map(record => (
           <div
@@ -42,7 +44,7 @@ const App = (props) => {
                 alt={record.title}
               /> : null}
           </div>
-        )) : <p>No records yet</p>
+        )) : <p>{t("No records yet")}</p>
       }
     </div>
   )

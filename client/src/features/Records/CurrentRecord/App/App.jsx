@@ -4,10 +4,12 @@ import classes from "./App.module.css";
 import { useParams, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import MapContainer from '../../../MapContainer';
+import { useTranslation } from 'react-i18next';
 
 const App = props => {
   let history = useHistory();
   let { id } = useParams();
+  const { t } = useTranslation();
   const [record, setRecord] = useState([]);
 
   useEffect(() => {
@@ -32,11 +34,11 @@ const App = props => {
       <h2>{record.title}</h2>
       <p>{record.body}</p>
       <p>
-        Latitude: {record.latitude + " "}
-        Longitude: {record.longitude}
+        {t("Latitude")}: {record.latitude + " "}
+        {t("Longitude")}: {record.longitude}
       </p>
       <MapContainer havePosition/>
-      <p>Author: {record.author}</p>
+      <p>{t("Author")}: {record.author}</p>
         {record.url?.length > 0 ?
           <img
             className={classes.Image}

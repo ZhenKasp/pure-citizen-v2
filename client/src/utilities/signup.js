@@ -5,7 +5,8 @@ const signup = (
   event,
   createFlashMessage,
   setUser,
-  history
+  history,
+  t
 )  => {
   event.preventDefault();
   const object = getFormData(event);
@@ -23,7 +24,7 @@ const signup = (
       axios.defaults.headers.common["client"] = res.headers.client;
       axios.defaults.headers.common["access-token"] = res.headers["access-token"];
       axios.defaults.headers.common["expiry"] = res.headers.expiry;
-      createFlashMessage("Sign Up sucessful", "success");
+      createFlashMessage(t("Sign Up sucessfuly"), "success");
       history.push("/");
     }
   })

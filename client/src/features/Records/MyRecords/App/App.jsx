@@ -5,9 +5,11 @@ import { connect } from 'react-redux';
 import classes from './App.module.css';
 import NewRecordModal from '../NewRecordModal/NewRecordModal';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const App = (props) => {
   let history = useHistory();
+  const { t } = useTranslation();
   const [myRecords, setMyRecords] = useState([]);
   const [modalIsShown, setModalIsShown] = useState(false);
 
@@ -28,8 +30,8 @@ const App = (props) => {
 
   return (
     <div className={classes.Wrapper}>
-      <h2>My Records</h2>
-      <Button onClick={() => setModalIsShown(true)}>Create new record</Button>
+      <h2>{t("My Records")}</h2>
+      <Button onClick={() => setModalIsShown(true)}>{t("Create New Record")}</Button>
       {myRecords.length > 0 ?
         myRecords.map(record => (
           <div
@@ -39,8 +41,8 @@ const App = (props) => {
           >
             <h4>{record.title}</h4>
             <p>
-              Latitude: {record.latitude}
-              Longitude: {record.longitude}
+              {t("Latitude")}: {record.latitude}
+              {t("Longitude")}: {record.longitude}
             </p>
             {record.url.length > 0 ?
               <img
@@ -49,7 +51,7 @@ const App = (props) => {
                 alt={record.title}
               /> : null}
           </div>
-        )) : <p>No records yet</p>
+        )) : <p>{t("No records yet")}</p>
       }
       <NewRecordModal
         modalIsShownHandler={() => setModalIsShown(true)}

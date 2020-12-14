@@ -7,9 +7,11 @@ import { connect } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import classes from './NewRecordModal.module.css';
 import MapContainer from '../../../MapContainer';
+import { useTranslation } from 'react-i18next';
 
 const NewRecordModal = (props) => {
   const [image, setImage] = useState("");
+  const { t } = useTranslation();
   const onDrop = useCallback(acceptedFiles => {
     setImage(acceptedFiles[0]);
   }, [])
@@ -50,37 +52,37 @@ const NewRecordModal = (props) => {
         modalClosed={props.modalIsShownCancelHandler}
       >
         <Form onSubmit={(e) => submitCreateRecord(e)} id="post">
-          <h3>Create Record</h3>
+          <h3>{t("Create Record")}</h3>
           <Form.Group>
-            <Form.Label>Title</Form.Label>
+            <Form.Label>{t("Title")}</Form.Label>
             <Form.Control
               maxLength="255"
               required type="text"
-              placeholder="Title"
+              placeholder={t("Title")}
               name="post[title]"
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Description</Form.Label>
+            <Form.Label>{t("Description")}</Form.Label>
             <Form.Control
               name="post[body]"
               required as="textarea"
               rows={3}
-              placeholder="Description"
+              placeholder={t("Description")}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Сoordinates</Form.Label>
+            <Form.Label>{t("Сoordinates")}</Form.Label>
             <MapContainer havePosition={false} />
           </Form.Group>
           <Form.Group>
-            <label>Image</label>
+            <label>{t("Image")}</label>
             <div {...getRootProps()} className={classes.Dropzone}>
               <input {...getInputProps()} />
               {
                 isDragActive ?
-                  <p>Drop the image</p> :
-                  <p>Drag 'n' drop</p>
+                  <p>{t("Drop the image")}</p> :
+                  <p>{t("Drag 'n' drop")}</p>
               }
               {image &&
                 <>
@@ -98,7 +100,7 @@ const NewRecordModal = (props) => {
             </div>
           </Form.Group>
           <Form.Group />
-          <Button type="submit">Confirm</Button>
+          <Button type="submit">{t("Confirm")}</Button>
         </Form>
       </Modal>
     </div>
