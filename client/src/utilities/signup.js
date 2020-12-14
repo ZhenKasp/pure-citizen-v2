@@ -28,7 +28,7 @@ const signup = (
     }
   })
   .catch((err) => {
-    createFlashMessage(err.response.data.errors.full_messages[0], "danger")
+    createFlashMessage(err.response.data.errors[0], "danger")
   });
   }
 
