@@ -1,6 +1,7 @@
 class Post < ActiveRecord::Base
   belongs_to :user
   has_one_attached :image
+  default_scope { order(created_at: :desc) }
 
   def as_json(_)
     {

@@ -77,7 +77,7 @@ const App = (props) => {
           />
         </Form.Group>
         <Form.Group >
-          <Form.Label>Password Confirmation</Form.Label>
+          <Form.Label>{t("Password Confirmation")}</Form.Label>
           <Form.Control
             maxLength="255"
             type="password"

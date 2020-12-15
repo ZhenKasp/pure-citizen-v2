@@ -15,7 +15,7 @@ const App = (props) => {
 
   useEffect(() => {
     try {
-      axios.get(process.env.REACT_APP_PATH_TO_SERVER + "posts")
+      axios.get(process.env.REACT_APP_PATH_TO_SERVER + "my_posts")
       .then(res => {
         if (res.data.error) {
           props.createFlashMessage(res.data.error, "danger");

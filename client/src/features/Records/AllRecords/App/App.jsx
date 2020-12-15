@@ -36,7 +36,7 @@ const App = (props) => {
             onClick={() => history.push("record/" + record.id)}
           >
             <h4>{record.title}</h4>
-            <p>Author: {record.author}</p>
+            <p>{t("Author")}: {record.author}</p>
             {record.url.length > 0 ?
               <img
                 className={classes.Image}
