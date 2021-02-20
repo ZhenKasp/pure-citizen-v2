@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,6 +15,7 @@ import NavBar from './features/NavBar';
 import NotFound from './features/NotFound';
 import About from './features/About';
 import Profile from './features/Profile';
+import Loading from './features/Loading';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -29,6 +30,7 @@ const App = props => {
     <Router>
       <NavBar />
       <FlashMessage />
+      { props.loading && <Loading /> }
       <Switch>
         <Route exact path="/" >
           <AllRecords />
@@ -62,7 +64,8 @@ const App = props => {
 const mapStateToProps = state => {
   return {
     flashMessage: state.flashMessage,
-    user: state.user
+    user: state.user,
+    loading: state.loading
   }
 }
 

@@ -13,6 +13,7 @@ const App = props => {
   const [record, setRecord] = useState([]);
 
   useEffect(() => {
+    props.setLoading(true);
     axios.get(process.env.REACT_APP_PATH_TO_SERVER + "posts/" + id,
       { headers: { authorization: props.user }}
     ).then(res => {
@@ -22,6 +23,7 @@ const App = props => {
       } else {
         history.replace('/notFound');
       }
+      props.setLoading(false);
     }).catch(err => {
       console.log(err);
       props.createFlashMessage(err.message, "danger");
@@ -31,27 +33,32 @@ const App = props => {
 
   return (
     <div className={classes.Wrapper}>
-      <h2>{record.title}</h2>
-      <p>{record.body}</p>
-      <p>
-        {t("Latitude")}: {record.latitude + " "}
-        {t("Longitude")}: {record.longitude}
-      </p>
-      <MapContainer havePosition/>
-      <p>{t("Author")}: {record.author}</p>
-        {record.url?.length > 0 ?
-          <img
-            className={classes.Image}
-            src={record.url}
-            alt={record.title}
-          /> : null}
+      {!props.loading &&
+        <div>
+          <h2>{record.title}</h2>
+          <p>{record.body}</p>
+          <p>
+            {t("Latitude")}: {record.latitude + " "}
+            {t("Longitude")}: {record.longitude}
+          </p>
+          <MapContainer havePosition/>
+          <p>{t("Author")}: {record.author}</p>
+          {record.url?.length > 0 ?
+            <img
+              className={classes.Image}
+              src={record.url}
+              alt={record.title}
+            /> : null}
+        </div>
+      }
     </div>
   )
 }
 
 const mapStateToProps = state => ({
   user: state.user,
-  position: state.position
+  position: state.position,
+  loading: state.loading
 });
 
 const mapDispatchToProps = dispatch => {
@@ -61,7 +68,8 @@ const mapDispatchToProps = dispatch => {
       text: text,
       variant: variant
     }),
-    setPosition: position => dispatch({ type: "SET_POSITION", position })
+    setPosition: position => dispatch({ type: "SET_POSITION", position }),
+    setLoading: loading => dispatch({ type: "SET_LOADING", loading })
   }
 }
 

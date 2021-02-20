@@ -14,57 +14,65 @@ const App = (props) => {
   const [modalIsShown, setModalIsShown] = useState(false);
 
   useEffect(() => {
-    try {
-      axios.get(process.env.REACT_APP_PATH_TO_SERVER + "my_posts")
-      .then(res => {
-        if (res.data.error) {
-          props.createFlashMessage(res.data.error, "danger");
-        } else {
-          setMyRecords(res.data.posts);
-        }
-      });
-    } catch (err) {
+    props.setLoading(true);
+    axios.get(process.env.REACT_APP_PATH_TO_SERVER + "my_posts"
+    ).then(res => {
+      if (res.data.error) {
+        props.createFlashMessage(res.data.error, "danger");
+      } else {
+        setMyRecords(res.data.posts);
+      }
+      props.setLoading(false);
+    }).catch(err => {
       props.createFlashMessage(err.message, "danger");
-    }
+      props.setLoading(false);
+    });
   }, []);
 
   return (
     <div className={classes.Wrapper}>
-      <h2>{t("My Records")}</h2>
-      <Button onClick={() => setModalIsShown(true)}>{t("Create New Record")}</Button>
-      {myRecords.length > 0 ?
-        myRecords.map(record => (
-          <div
-            className={classes.Record}
-            key={record.id}
-            onClick={() => history.push("record/" + record.id)}
-          >
-            <h4>{record.title}</h4>
-            <p>
-              {t("Latitude")}: {record.latitude}
-              {t("Longitude")}: {record.longitude}
-            </p>
-            {record.url.length > 0 ?
-              <img
-                className={classes.Image}
-                src={record.url}
-                alt={record.title}
-              /> : null}
-          </div>
-        )) : <p>{t("No records yet")}</p>
+      {!props.loading &&
+        <div>
+          <h2>{t("My Records")}</h2>
+          <Button onClick={() => setModalIsShown(true)}>{t("Create New Record")}</Button>
+          {myRecords.length > 0 ?
+            myRecords.map(record => (
+              <div
+                className={classes.Record}
+                key={record.id}
+                onClick={() => history.push("record/" + record.id)}
+              >
+                <h4>{record.title}</h4>
+                <p>
+                  {t("Latitude")}: {record.latitude}
+                  {t("Longitude")}: {record.longitude}
+                </p>
+                {record.url.length > 0 ?
+                  <img
+                    className={classes.Image}
+                    src={record.url}
+                    alt={record.title}
+                  /> : null}
+              </div>
+            )) : <p>{t("No records yet")}</p>
+          }
+          <NewRecordModal
+            modalIsShownHandler={() => setModalIsShown(true)}
+            modalIsShownCancelHandler={() => setModalIsShown(false)}
+            modalIsShown={modalIsShown}
+            myRecords={myRecords}
+            setMyRecords={setMyRecords}
+          />
+        </div>
       }
-      <NewRecordModal
-        modalIsShownHandler={() => setModalIsShown(true)}
-        modalIsShownCancelHandler={() => setModalIsShown(false)}
-        modalIsShown={modalIsShown}
-        myRecords={myRecords}
-        setMyRecords={setMyRecords}
-      />
     </div>
   )
 }
 
-const mapStateToProps = state => ({ position: state.position });
+const mapStateToProps = state => ({
+  position: state.position,
+  loading: state.loading
+});
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -72,7 +80,8 @@ const mapDispatchToProps = dispatch => {
       type: "CREATE_FLASH_MESSAGE",
       text: text,
       variant: variant
-    })
+    }),
+    setLoading: loading => dispatch({ type: 'SET_LOADING', loading: loading })
   }
 };
 

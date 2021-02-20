@@ -26,22 +26,26 @@ const NewRecordModal = (props) => {
     if (image?.name) object.append('post[image]', image, image.name);
     object.append('post[user_id]', props.user.id);
     event.persist();
+
+    props.setLoading(true);
     axios.post(process.env.REACT_APP_PATH_TO_SERVER + "posts",
       object, { headers: { authorization: props.user.token, 'Content-Type': 'multipart/form-data' }}
     ).then(res => {
       if (res.data.error) {
         props.createFlashMessage(res.data.errors, "danger");
+        props.modalIsShownCancelHandler();
       } else {
         props.createFlashMessage(res.data.message, "success");
-        props.setMyRecords([...props.myRecords, res.data.post]);
+        props.setMyRecords([res.data.post, ...props.myRecords]);
         props.modalIsShownCancelHandler();
         event.target.reset();
         setImage("");
       }
-    })
-    .catch((err) => {
+      props.setLoading(false);
+    }).catch((err) => {
       props.createFlashMessage(err.message, "danger");
       props.modalIsShownCancelHandler();
+      props.setLoading(false);
     });
   }
 
@@ -109,7 +113,8 @@ const NewRecordModal = (props) => {
 
 const mapStateToProps = state => ({
   user: state.user,
-  position: state.position
+  position: state.position,
+  loading: state.loading
 });
 
 const mapDispatchToProps = dispatch => {
@@ -119,6 +124,7 @@ const mapDispatchToProps = dispatch => {
       text: text,
       variant: variant
     }),
+    setLoading: loading => dispatch({ type: 'SET_LOADING', loading: loading })
   }
 }
 

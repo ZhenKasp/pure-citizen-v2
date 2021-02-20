@@ -11,44 +11,53 @@ const App = (props) => {
   const [allRecords, setAllRecords] = useState([]);
 
   useEffect(() => {
-    try {
-      axios.get(process.env.REACT_APP_PATH_TO_SERVER + "posts")
-      .then(res => {
-        if (res.data.error) {
-          props.createFlashMessage(res.data.error, "danger");
-        } else {
-          setAllRecords(res.data.posts);
-        }
-      });
-    } catch (err) {
+    props.setLoading(true);
+    axios.get(process.env.REACT_APP_PATH_TO_SERVER + "posts")
+    .then(res => {
+      if (res.data.error) {
+        props.createFlashMessage(res.data.error, "danger");
+      } else {
+        setAllRecords(res.data.posts);
+      }
+      props.setLoading(false);
+    }).catch(err => {
       props.createFlashMessage(err.message, "danger");
-    }
+      props.setLoading(false);
+    });
   }, []);
 
   return (
     <div className={classes.Wrapper}>
-      <h2>{t("Records")}</h2>
-      {allRecords.length > 0 ?
-        allRecords.map(record => (
-          <div
-            className={classes.Record}
-            key={record.id}
-            onClick={() => history.push("record/" + record.id)}
-          >
-            <h4>{record.title}</h4>
-            <p>{t("Author")}: {record.author}</p>
-            {record.url.length > 0 ?
-              <img
-                className={classes.Image}
-                src={record.url}
-                alt={record.title}
-              /> : null}
-          </div>
-        )) : <p>{t("No records yet")}</p>
+      {!props.loading &&
+        <div>
+          <h2>{t("Records")}</h2>
+          {allRecords.length > 0 ?
+            allRecords.map(record => (
+              <div
+                className={classes.Record}
+                key={record.id}
+                onClick={() => history.push("record/" + record.id)}
+              >
+                <h4>{record.title}</h4>
+                <p>{t("Author")}: {record.author}</p>
+                {record.url.length > 0 ?
+                  <img
+                    className={classes.Image}
+                    src={record.url}
+                    alt={record.title}
+                  /> : null}
+              </div>
+            )) : <p>{t("No records yet")}</p>
+          }
+        </div>
       }
     </div>
   )
 }
+
+const mapStateToProps = state => ({
+  loading: state.loading
+})
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -56,8 +65,9 @@ const mapDispatchToProps = dispatch => {
       type: "CREATE_FLASH_MESSAGE",
       text: text,
       variant: variant
-    })
+    }),
+    setLoading: (loading) => dispatch({ type: "SET_LOADING", loading: loading })
   }
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
