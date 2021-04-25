@@ -20,7 +20,6 @@
 .Image {
   border: 1px solid #ced4da;
   border-radius: 3px;
-  width: 100%;
-  height: auto;
-  max-width: 600px;
+  max-height: 1080px;
+  max-width: 100%; 
 }

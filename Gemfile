@@ -6,6 +6,8 @@ ruby '2.7.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
 
+gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
+
 gem 'mysql2'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
@@ -31,9 +33,8 @@ gem 'dotenv-rails'
 gem 'devise_token_auth'
 gem 'rack-cors'
 gem 'aws-sdk-s3'
-gem 'omniauth'
-gem 'omniauth-twitter'
-gem 'omniauth-facebook'
+gem 'omniauth', '< 2.0'
+gem 'omniauth-google-oauth2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
