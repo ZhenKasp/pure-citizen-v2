@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :posts
       resources :my_posts, only: [:index]
+      resources :sign_in_via_google, only: [:create]
     end
   end
 end

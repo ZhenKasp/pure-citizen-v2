@@ -4,9 +4,11 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.css';
 import signin from '../../../../utilities/signin';
+import signinWithGoogle from '../../../../utilities/signinViaGoogle';
 import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
+import GoogleLogin from 'react-google-login';
 
 const App = props => {
   let history = useHistory();
@@ -49,6 +51,15 @@ const App = props => {
           {t("Sign In")}
         </Button>
       </Form>
+      <div>
+        <GoogleLogin
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          buttonText="Login via Google"
+          onSuccess={(authResult) => signinWithGoogle(props.createFlashMessage, authResult, props.setUser, history, t)}
+          onFailure={() => props.createFlashMessage("Couldn't sign in", "danger")}
+          cookiePolicy={'single_host_origin'}
+        />
+      </div>
     </div>
   )
 }
