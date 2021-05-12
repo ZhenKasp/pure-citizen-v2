@@ -10,6 +10,7 @@ const signup = (
 )  => {
   event.preventDefault();
   const object = getFormData(event);
+  debugger
 
   axios.post(process.env.REACT_APP_PATH_TO_SERVER + "authenticate", object)
   .then(res => {
@@ -29,7 +30,7 @@ const signup = (
     }
   })
   .catch((err) => {
-    createFlashMessage(err.response.data.errors[0], "danger")
+    createFlashMessage('User with this email already exists', "danger")
   });
   }
 

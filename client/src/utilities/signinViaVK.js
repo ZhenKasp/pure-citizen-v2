@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const signinViaGoogle = (
+const signinViaVK = (
   createFlashMessage,
   authResult,
   setUser,
@@ -8,7 +8,7 @@ const signinViaGoogle = (
   t
 ) => {
   axios.post(
-    process.env.REACT_APP_PATH_TO_SERVER + "sign_in_via_google",
+    process.env.REACT_APP_PATH_TO_SERVER + "sign_in_via_vk",
     authResult,
     { headers: { 'X-Requested-With': 'XMLHttpRequest' } }
   ).then(res => {
@@ -32,4 +32,4 @@ const signinViaGoogle = (
   });
 }
 
-export default signinViaGoogle;
+export default signinViaVK;

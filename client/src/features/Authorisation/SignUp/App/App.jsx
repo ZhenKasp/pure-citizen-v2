@@ -5,10 +5,12 @@ import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.css';
 import signup from '../../../../utilities/signup';
 import signinWithGoogle from '../../../../utilities/signinViaGoogle';
+import signinWithVK from '../../../../utilities/signinViaVK';
 import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import GoogleLogin from 'react-google-login';
+import VK, {Auth} from 'react-vk';
 
 const App = props => {
   let history = useHistory();
@@ -16,7 +18,7 @@ const App = props => {
 
   return (
     <div className={classes.SignUp}>
-      <h1>{t("Please Sign Up")}</h1>
+      <h1>{t("Sign Up")}</h1>
       <Form
         onSubmit={(event) =>
           signup(
@@ -92,14 +94,20 @@ const App = props => {
           {t("Registration")}
         </Button>
       </Form>
-      <div>
-        <GoogleLogin
-          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-          buttonText="Login via Google"
-          onSuccess={(authResult) => signinWithGoogle(props.createFlashMessage, authResult, props.setUser, history, t)}
-          onFailure={() => props.createFlashMessage("Couldn't sign in", "danger")}
-          cookiePolicy={'single_host_origin'}
-        />
+      <GoogleLogin
+        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+        buttonText="Login via Google"
+        onSuccess={(authResult) => signinWithGoogle(props.createFlashMessage, authResult, props.setUser, history, t)}
+        onFailure={() => props.createFlashMessage("Couldn't sign in", "danger")}
+        cookiePolicy={'single_host_origin'}
+      />
+      <div className={classes.VKAuthentication}>
+        <VK apiId={process.env.REACT_APP_VK_CLIENT_ID}>
+          <Auth options={{
+            width: '280',
+            onAuth: (authResult) => signinWithVK(props.createFlashMessage, authResult, props.setUser, history, t)
+          }}/>
+        </VK>
       </div>
     </div>
   )

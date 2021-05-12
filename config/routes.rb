@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :posts
       resources :my_posts, only: [:index]
       resources :sign_in_via_google, only: [:create]
+      resources :sign_in_via_vk, only: [:create]
     end
   end
 end
